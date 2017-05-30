@@ -2,6 +2,7 @@ package net.runnerdave.model;
 
 import java.time.Instant;
 import java.time.MonthDay;
+import java.util.Date;
 
 /**
  * Created by David A. Jiménez (e67997) on 30/05/2017.
@@ -11,6 +12,8 @@ public class Contact implements Comparable<Contact> {
     private String lastName;
     private String phoneNumber;
     private String address;
+    private MonthDay birthday;
+    private Instant dateCreated;
 
     public Contact() {
     }
@@ -23,6 +26,11 @@ public class Contact implements Comparable<Contact> {
         this.address = address;
         this.birthday = birthday;
         this.dateCreated = dateCreated;
+    }
+
+    public Date getOldDateCreated()
+    {
+        return new Date(this.dateCreated.toEpochMilli());
     }
 
     public String getFirstName() {
@@ -49,9 +57,6 @@ public class Contact implements Comparable<Contact> {
     public Instant getDateCreated() {
         return dateCreated;
     }
-
-    private MonthDay birthday;
-    private Instant dateCreated;
 
     @Override
     public int compareTo(Contact other) {

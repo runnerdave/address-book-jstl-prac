@@ -7,11 +7,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.jstl.core.Config;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.Month;
 import java.time.MonthDay;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -36,7 +38,7 @@ public class ListServlet extends HttpServlet {
                 null, Instant.parse("1770-10-15T15:31:17Z")
         ));
         contacts.add(new Contact("Simón", "Bolívar", "555-9834", "Caracas",
-                MonthDay.of(Month.NOVEMBER, 17),
+                MonthDay.of(Month.DECEMBER, 17),
                 Instant.parse("1783-12-17T01:45:01Z")
         ));
     }
@@ -44,6 +46,11 @@ public class ListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String language = request.getParameter("language");
+        if ("french".equalsIgnoreCase(language))
+            Config.set(request, Config.FMT_LOCALE, Locale.FRANCE);
+        else if ("venezolano".equalsIgnoreCase(language))
+            Config.set(request, Config.FMT_LOCALE, new Locale("es", "VE"));
         if (request.getParameter("empty") != null)
             request.setAttribute("contacts", Collections.<Contact>emptySet());
         else
